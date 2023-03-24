@@ -11,7 +11,6 @@ public class EmployeeDAO implements InterfaceDAO<Employee> {
     public static EmployeeDAO getInstance() {
         return new EmployeeDAO();
     }
-
     @Override
     public ArrayList<Employee> SelectAll() {
         List<Employee> selectList = new ArrayList<>();
@@ -57,7 +56,6 @@ public class EmployeeDAO implements InterfaceDAO<Employee> {
             } else if (cond ==4) {
                 prst.setNull(1,Types.INTEGER);
             }
-            System.out.println(prst.toString());
             ResultSet rs = prst.executeQuery();
             while (rs.next()) {
                 Employee emp = new Employee(
@@ -166,5 +164,30 @@ public class EmployeeDAO implements InterfaceDAO<Employee> {
         } finally {
             JDBCUtil.closeConnection(cnt);
         }
+    }
+    /*
+    SELECT COUNT(column_name)
+FROM table_name
+WHERE condition;*/
+    public static int getNumberDep(String col, String col2,int x){
+        int num = 0;
+        Connection cnt = null;
+        PreparedStatement prst = null;
+        try {
+            cnt = JDBCUtil.getConnection();
+            //SELECT COUNT(empID) as huyn FROM employees WHERE depID =12 GROUP BY depID;
+            String SQL = "SELECT COUNT("+col+") as huyn FROM employees WHERE "+ col2+" = ? GROUP BY "+col2;
+            prst = cnt.prepareStatement(SQL);
+            prst.setInt(1,x);
+            ResultSet rs = prst.executeQuery();
+            while (rs.next()) {
+                num = rs.getInt("huyn");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            JDBCUtil.closeConnection(cnt);
+        }
+        return num;
     }
 }

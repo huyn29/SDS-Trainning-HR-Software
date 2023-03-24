@@ -8,7 +8,7 @@ create table if not exists admins(
 );
 
 create table if not exists departments(
-	depID int NOT NULL PRIMARY KEY,
+	depID int NOT NULL PRIMARY KEY UNIQUE,
 	depName varchar(30) NOT NULL,
 	numberMember int NOT NULL,
 	depManagerID INT

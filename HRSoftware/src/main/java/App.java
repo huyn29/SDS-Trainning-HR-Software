@@ -26,7 +26,8 @@ public class App {
             System.out.println(" 3: Find employee                                  *");
             System.out.println(" 4: Add/delete employee in departmet               *");
             System.out.println(" 5: Choose department manager                      *");
-            System.out.println(" 6: Calculate the tax                              *");
+            System.out.println(" 6: Move department for employee                   *");
+            System.out.println(" 7: Calculate the tax                              *");
             System.out.println("* * * * * * * * * * * ** * * * * * * * * * * * * * *");
             System.out.println();
             System.out.printf("Your Choose: ");
@@ -93,7 +94,7 @@ public class App {
                     break;
                 }
                 case 4:{
-                    emps.joinDepartment();
+                    emps.AddDeleteDepartment();
                     break;
                 }
                 case 5:{
@@ -101,6 +102,10 @@ public class App {
                     break;
                 }
                 case 6:{
+                    emps.MoveDepartment();
+                    break;
+                }
+                case 7:{
                     emps.calculateTAX();
                     break;
                 }

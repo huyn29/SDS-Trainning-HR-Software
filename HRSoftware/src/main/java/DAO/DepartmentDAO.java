@@ -54,7 +54,6 @@ public class DepartmentDAO implements InterfaceDAO<Department> {
             } else if (cond ==4) {
                 prst.setNull(1,Types.INTEGER);
             }
-            System.out.println(prst.toString());
             ResultSet rs = prst.executeQuery();
             while (rs.next()) {
                 Department dep = new Department(
@@ -122,7 +121,6 @@ public class DepartmentDAO implements InterfaceDAO<Department> {
             }else if (cond ==4) {
                 prst.setNull(1, Types.VARCHAR);
             }
-            System.out.println(prst.toString());
             int rs = prst.executeUpdate();
             if(rs != 0){
                 System.out.println("Successfully");

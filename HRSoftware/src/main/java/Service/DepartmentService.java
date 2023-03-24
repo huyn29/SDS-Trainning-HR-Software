@@ -77,27 +77,62 @@ public class DepartmentService {
         }
     }
     public void deleteDep(){
+        List<Department> temp = new ArrayList<>();
         System.out.println("--------------------------------");
         System.out.println("1: Delete by ID:");
         System.out.println("2: Delete by name");
-        System.out.println("3: Delete by phone");
+        System.out.println("3: Exit");
         System.out.println("--------------------------------");
         System.out.printf("Your Choose: ");
         int i1 = InputService.InputInteger();
         switch (i1){
-            case 1:
+            case 1: {
                 System.out.printf("Enter the ID: ");
                 int id = InputService.InputInteger();
-                DepartmentDAO.getInstance().Delete("depID", id,2);
-                break;
-            case 2:
+                temp = DepartmentDAO.getInstance().selectByConditon("depID", id, 2);
+                if (temp.size() != 0) {
+                    System.out.println(temp.get(0).printfInfor());
+                    System.out.println("--------------------------------");
+                    System.out.println("Do you want delete - 1:yes/2:No");
+                    System.out.println("--------------------------------");
+                    System.out.printf("Your Choose: ");
+                    int choose = InputService.InputInteger();
+                    if (choose == 1) {
+                        DepartmentDAO.getInstance().Delete("depID", id, 2);
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    System.out.println("Department not exist");
+                    break;
+                }
+            }
+            case 2: {
                 System.out.printf("Enter the name: ");
                 String name = InputService.InputString();
-                DepartmentDAO.getInstance().Delete("depName",name,2);
+                temp = DepartmentDAO.getInstance().selectByConditon("depName", name, 1);
+                if (temp.size() != 0) {
+                    System.out.println(temp.get(0).printfInfor());
+                    System.out.println("--------------------------------");
+                    System.out.println("Do you want delete - 1:yes/2:No");
+                    System.out.println("--------------------------------");
+                    System.out.printf("Your Choose: ");
+                    int choose = InputService.InputInteger();
+                    if (choose == 1) {
+                        DepartmentDAO.getInstance().Delete("depName", name, 1);
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    System.out.println("Department not exist");
+                    break;
+                }
+            }
+            case 3:{
                 break;
-            case 3:
-                System.out.println("Exit");
-                break;
+            }
         }
     }
 }
