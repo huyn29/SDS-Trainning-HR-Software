@@ -43,7 +43,6 @@ public class DepartmentService {
                 System.out.println("This id already exists. Try again");
             }
         }
-
     }
 
     public void updateDep() {
