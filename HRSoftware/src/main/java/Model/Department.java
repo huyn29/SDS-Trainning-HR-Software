@@ -51,7 +51,7 @@ public class Department {
         this.depManagerID = depManagerID;
     }
     public String printfInfor() {
-        return String.format("Department %-5d\tName: %-10s\tNumber member: %-5d\tManager: %-5d"
+        return String.format("Department %-5d\tName: %-10s\tNumber capacity: %-5d\tManager: %-5d"
                 ,depID,depName,numberMember,depManagerID);
     }
 

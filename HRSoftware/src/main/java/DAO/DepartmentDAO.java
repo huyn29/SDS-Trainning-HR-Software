@@ -71,22 +71,16 @@ public class DepartmentDAO implements InterfaceDAO<Department> {
         }
     }
     @Override
-    public void Insert(int n, ArrayList<Department> dept) {
+    public void Insert( Department dept) {
         Connection cnt = null;
         PreparedStatement prst = null;
         try {
             cnt = JDBCUtil.getConnection();
-            StringBuffer stbf = new StringBuffer("INSERT INTO departments(depID,depName,numberMember) VALUES (?,?,?)");
-            for (int i = 0; i < n - 1; i++) {
-                stbf.append(",(?,?,?)");
-            }
-            stbf.append(";");
-            prst = cnt.prepareStatement(stbf.toString());
-            for (int i = 0; i < n; i++) {
-                prst.setInt((3 * i) + 1, dept.get(i).getDepID());
-                prst.setString((3 * i) + 2, dept.get(i).getDepName());
-                prst.setInt((3 * i) + 3, dept.get(i).getNumberMember());
-            }
+            String sql = "INSERT INTO departments(depID,depName,numberMember) VALUES (?,?,?)";
+            prst = cnt.prepareStatement(sql);
+                prst.setInt(1, dept.getDepID());
+                prst.setString( 2, dept.getDepName());
+                prst.setInt( 3, dept.getNumberMember());
             int rs = prst.executeUpdate();
             if(rs != 0){
                 System.out.println("Successfully");

@@ -76,24 +76,17 @@ public class EmployeeDAO implements InterfaceDAO<Employee> {
         }
     }
     @Override
-    public void Insert(int n, ArrayList<Employee> emp) {
+    public void Insert( Employee emp) {
         Connection cnt = null;
         PreparedStatement prst = null;
         try {
             cnt = JDBCUtil.getConnection();
-            StringBuffer stbf = new StringBuffer("INSERT INTO employees(empName,empPhone,email,salary,managerID) VALUES (?,?,?,?,?)");
-            for (int i = 0; i < n - 1; i++) {
-                stbf.append(",(?,?,?,?,?)");
-            }
-            stbf.append(";");
-            prst = cnt.prepareStatement(stbf.toString());
-            for (int i = 0; i < n; i++) {
-                prst.setString((5 * i) + 1, emp.get(i).getEmpName());
-                prst.setString((5 * i) + 2, emp.get(i).getEmpPhone());
-                prst.setString((5 * i) + 3, emp.get(i).getEmail());
-                prst.setDouble((5 * i) + 4, emp.get(i).getSalary());
-                prst.setInt((5 * i) + 5, emp.get(i).getManagerID());
-            }
+            String Sql = "INSERT INTO employees(empName,empPhone,email,salary) VALUES (?,?,?,?)";
+            prst = cnt.prepareStatement(Sql);
+                prst.setString( 1, emp.getEmpName());
+                prst.setString( 2, emp.getEmpPhone());
+                prst.setString( 3, emp.getEmail());
+                prst.setDouble( 4, emp.getSalary());
             int rs = prst.executeUpdate();
             if(rs != 0){
                 System.out.println("Successfully");
@@ -165,10 +158,6 @@ public class EmployeeDAO implements InterfaceDAO<Employee> {
             JDBCUtil.closeConnection(cnt);
         }
     }
-    /*
-    SELECT COUNT(column_name)
-FROM table_name
-WHERE condition;*/
     public static int getNumberDep(String col, String col2,int x){
         int num = 0;
         Connection cnt = null;

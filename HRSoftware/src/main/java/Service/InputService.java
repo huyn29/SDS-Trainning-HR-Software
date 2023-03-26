@@ -12,16 +12,14 @@ public class InputService {
         while (!validInput) {
             try {
                 number = Integer.parseInt(scanner.nextLine());
-                if (number <= 0) {
-                    throw new Exception("Input number must be greater than 0.");
+                if (number < 0) {
+                    throw new Exception("Input number must be greater than 0. Try again.");
                 }
                 validInput = true;
-            } catch (InputMismatchException e1) {
-                System.out.println("Input must be an integer");
-                scanner.nextLine();
+            } catch (NumberFormatException e1) {
+                System.out.println("Input must be an integer. Try again.");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                scanner.nextLine();
             }
         }
         return number;
@@ -38,15 +36,15 @@ public class InputService {
             try {
                 number = Double.parseDouble(scanner.nextLine());
                 if (number <= 0) {
+                    System.out.println("*************************************");
                     throw new Exception("Input number must be greater than 0.");
                 }
                 validInput = true;
-            } catch (InputMismatchException e1) {
+            } catch (NumberFormatException e1) {
+                System.out.println("*************************************");
                 System.out.println("Input must be an double");
-                scanner.nextLine();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                scanner.nextLine();
             }
         }
         return number;

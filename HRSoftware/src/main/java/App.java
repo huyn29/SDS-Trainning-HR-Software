@@ -28,6 +28,8 @@ public class App {
             System.out.println(" 5: Choose department manager                      *");
             System.out.println(" 6: Move department for employee                   *");
             System.out.println(" 7: Calculate the tax                              *");
+            System.out.println(" 8: Statiѕtic                                      *");
+            System.out.println(" 9: Exit                                           *");
             System.out.println("* * * * * * * * * * * ** * * * * * * * * * * * * * *");
             System.out.println();
             System.out.printf("Your Choose: ");
@@ -109,6 +111,11 @@ public class App {
                     emps.calculateTAX();
                     break;
                 }
+                case 8:{
+                    emps.Statiѕtic();
+                    break;
+                }
+                case 9:{}
             }
         }
     }

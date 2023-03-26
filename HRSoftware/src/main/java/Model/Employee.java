@@ -19,6 +19,13 @@ public class Employee {
         this.depID = depID;
     }
 
+    public Employee(String empName, String empPhone, String email, double salary) {
+        this.empName = empName;
+        this.empPhone = empPhone;
+        this.email = email;
+        this.salary = salary;
+    }
+
     public Employee(String empName, String empPhone, String email, double salary, int managerID) {
         this.empName = empName;
         this.empPhone = empPhone;
@@ -86,16 +93,30 @@ public class Employee {
         return String.format("Employee %-5d\tName: %-10s\tPhone: %-10s\tEmail: %-10s\tSalary: %-10s\tManager ID: %-5d\t Department ID: %-5d"
                             ,empID,empName,empPhone,email,salary,managerID,depID);
     }
-    public void calculateTAX(double salary){
-        double realitySalary;
-        if(salary > 10 && salary <20){
-            realitySalary = salary*(1-(0.1));
-            System.out.println("Employee: "+empID+" - The Tax of you is 20% - Reality salary is: "+realitySalary);
-        } else if (salary>20) {
-            realitySalary = salary*(1-(0.2));
-            System.out.println("Employee: "+empID+" - The Tax of you is 10% - Reality salary is: "+realitySalary);
-        }else {
-            System.out.println("Employee: "+empID+" - The Tax of you is  0% - Reality salary is: "+salary);
+    public double calculateTAX(double salary) {
+        double realTax = 0;
+        double[] taxLevel = {0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3}; // Các mức thuế
+        double[] salaryLevel = {0, 5, 10, 18, 32, 52, 80}; // Các mức lương tương ứng
+
+        double Tax = 0;
+
+        // Tính số tiền thu nhập chịu thuế
+        double salaryfortax = salary - 4.4;
+
+        // Tính số tiền thuế phải nộp theo từng mức thuế
+        for (int i = 1; i < taxLevel.length; i++) {
+            if (salaryfortax > salaryLevel[i]) {
+                Tax += (salaryLevel[i] - salaryLevel[i - 1]) * taxLevel[i];
+            } else {
+                Tax += (salaryfortax - salaryLevel[i - 1]) * taxLevel[i];
+                break;
+            }
         }
+
+        // Tính số tiền thuế tổng cộng
+        realTax = Tax * 1000;
+
+        return realTax;
     }
+
 }
