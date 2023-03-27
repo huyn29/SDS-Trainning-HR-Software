@@ -2,6 +2,8 @@ package Service;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InputService {
     static Scanner scanner = new Scanner(System.in);
@@ -27,6 +29,38 @@ public class InputService {
     public static String InputString(){
         String string = "";
         string = scanner.nextLine();
+        return string;
+    }
+    public static  String InputEmail(){
+        String string = "";
+        boolean cond = true;
+        while (cond){
+            string = scanner.nextLine();
+            String pattern = "^[\\w+\\-.]+@[a-z\\d\\-]+(\\.[a-z\\d\\-]+)*\\.[a-z]+$";
+            Pattern regex = Pattern.compile(pattern);
+            Matcher matcher = regex.matcher(string);
+            if( matcher.matches()==true){
+                cond = false;
+            }else {
+                System.out.println("wrong format. Try again");
+            }
+        }
+        return string;
+    }
+    public static  String InputPhone(){
+        String string = "";
+        boolean cond = true;
+        while (cond){
+            string = scanner.nextLine();
+            String phoneNumberPattern = "^\\d{10}$";
+            Pattern pattern = Pattern.compile(phoneNumberPattern);
+            Matcher matcher = pattern.matcher(string);
+            if( matcher.matches()==true){
+                cond = false;
+            }else {
+                System.out.println("wrong format. Try again");
+            }
+        }
         return string;
     }
     public static double InputDouble() {

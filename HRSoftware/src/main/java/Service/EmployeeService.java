@@ -32,9 +32,9 @@ public class EmployeeService {
             System.out.printf("Enter name: ");
             String name = InputService.InputString();
             System.out.printf("Enter phone: ");
-            String phone = InputService.InputString();
+            String phone = InputService.InputPhone();
             System.out.printf("Enter email: ");
-            String email = InputService.InputString();
+            String email = InputService.InputEmail();
             System.out.printf("Enter salary: ");
             double salary = InputService.InputDouble();
             System.out.println("--------------------------------");
@@ -92,7 +92,7 @@ public class EmployeeService {
                     break;
                 case 2:
                     System.out.printf("New Phone: ");
-                    String newPhone = InputService.InputString();
+                    String newPhone = InputService.InputPhone();
                     for (Employee t : empList) {
                         if (t.getEmpPhone().equals(newPhone) == true) {
                             x = true;
@@ -108,7 +108,7 @@ public class EmployeeService {
                     break;
                 case 3:
                     System.out.printf("New email: ");
-                    String newEmail = InputService.InputString();
+                    String newEmail = InputService.InputEmail();
                     for (Employee t : empList) {
                         if (t.getEmail().equals(newEmail) == true) {
                             x = true;
@@ -233,7 +233,7 @@ public class EmployeeService {
 
                 case 3: {
                     System.out.printf("Enter the phone: ");
-                    String phone = InputService.InputString();
+                    String phone = InputService.InputPhone();
                     temp = EmployeeDAO.getInstance().selectByConditon("empPhone", phone, 1);
                     int depID = temp.get(0).getDepID();
                     int id = temp.get(0).getEmpID();
@@ -262,7 +262,7 @@ public class EmployeeService {
                 }
                 case 4: {
                     System.out.printf("Enter the email");
-                    String email = InputService.InputString();
+                    String email = InputService.InputEmail();
                     temp = EmployeeDAO.getInstance().selectByConditon("empPhone", email, 1);
                     int depID = temp.get(0).getDepID();
                     int id = temp.get(0).getEmpID();

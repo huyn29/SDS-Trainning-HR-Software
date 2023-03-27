@@ -10,16 +10,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LoginService {
-    public static boolean Login() {
+    public static boolean Login(String userType,String passType) {
         Connection cnt = null;
         String user;
         String pass;
-        System.out.println("Enter your account");
-        System.out.printf("Type your user: ");
-        String userType = InputService.InputString();
-        System.out.println();
-        System.out.printf("Enter your password: ");
-        String passType = InputService.InputString();
+        boolean rsLogin = false;
         try {
             cnt = JDBCUtil.getConnection();
             Statement stmt = cnt.createStatement();
@@ -29,9 +24,8 @@ public class LoginService {
                 user = rs.getString("userAd");
                 pass = rs.getString("passwordAd");
                 if (user.equals(userType) == true && pass.equals(passType) == true) {
+                    rsLogin = true;
                     break;
-                } else {
-                    continue;
                 }
             }
         } catch (SQLException e) {
@@ -39,6 +33,6 @@ public class LoginService {
         } finally {
             JDBCUtil.closeConnection(cnt);
         }
-        return true;
+        return rsLogin;
     }
 }

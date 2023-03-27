@@ -13,10 +13,17 @@ public class App {
         while (true) {
             System.out.println("Wellcome to HRSoftware");
             while (!condition) {
-                if (LoginService.Login() == true) {
+                System.out.printf("Type your user: ");
+                String userType = InputService.InputString();
+                System.out.println();
+                System.out.printf("Enter your password: ");
+                String passType = InputService.InputString();
+                if (LoginService.Login(userType,passType)) {
                     System.out.println("Login successfull");
                     System.out.println();
                     condition = true;
+                } else {
+                    System.out.println("Wrong account. Try again.");
                 }
             }
             while (condition) {
