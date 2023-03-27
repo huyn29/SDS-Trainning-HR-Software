@@ -2,10 +2,13 @@ create database if not exists qlns ;
 use qlns;
 
 create table if not exists admins(
-	adminID int NOT NULL PRIMARY KEY,
+	adminID int PRIMARY KEY AUTO_INCREMENT,
 	userAd varchar(10),
 	passwordAd varchar(10)
 );
+INSERT INTO admins(userAd,passwordAd) VALUES 
+	('admin','admin'),
+	('huyn29','1');
 
 create table if not exists departments(
 	depID int NOT NULL PRIMARY KEY UNIQUE,

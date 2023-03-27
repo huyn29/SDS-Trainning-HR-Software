@@ -176,6 +176,7 @@ public class EmployeeService {
                         if (choose == 1) {
                             EmployeeDAO.getInstance().Delete("empID", id, 2);
                             if (id == temp2.get(0).getDepManagerID()) {
+                                System.out.println("This employee manager of department");
                                 DepartmentDAO.getInstance().Update("depManagerID", "", depID, 4);
                             }
                             temp.clear();
@@ -213,6 +214,7 @@ public class EmployeeService {
                             if (choose == 1) {
                                 EmployeeDAO.getInstance().Delete("empName", name, 1);
                                 if (id == temp2.get(x).getDepManagerID()) {
+                                    System.out.println("This employee manager of department");
                                     DepartmentDAO.getInstance().Update("depManagerID", "", depID, 4);
                                 }
                                 temp.clear();
@@ -246,6 +248,7 @@ public class EmployeeService {
                         if (choose == 1) {
                             EmployeeDAO.getInstance().Delete("empPhone", phone, 1);
                             if (id == temp2.get(0).getDepManagerID()) {
+                                System.out.println("This employee manager of department");
                                 DepartmentDAO.getInstance().Update("depManagerID", "", depID, 4);
                             }
                             break;
@@ -274,6 +277,7 @@ public class EmployeeService {
                         if (choose == 1) {
                             EmployeeDAO.getInstance().Delete("empPhone", email, 1);
                             if (id == temp2.get(0).getDepManagerID()) {
+                                System.out.println("This employee manager of department");
                                 DepartmentDAO.getInstance().Update("depManagerID", "", depID, 4);
                             }
                             break;
@@ -378,7 +382,7 @@ public class EmployeeService {
                     empList.clear();
                     break;
                 }
-                default:{
+                default: {
                     System.out.println("Error. Try again.");
                 }
             }
@@ -386,84 +390,88 @@ public class EmployeeService {
     }
 
     public void AddDeleteDepartment() {
-        List<Employee> temp = new ArrayList<>();
-        List<Department> temp1 = new ArrayList<>();
         boolean cond = true;
-        boolean cond2 = true;
-        int depID = 0;
-        System.out.printf("Enter the employee ID for add/delete: ");
-        int ide = InputService.InputInteger();
-        temp = EmployeeDAO.getInstance().selectByConditon("empID", ide, 2);
-        if (temp.size() != 0) {
-            depID = temp.get(0).getDepID();
-            System.out.println(temp.get(0).printfInfor());
-            temp.clear();
-        } else {
-            System.out.println("Employee not exist");
-            cond = false;
-        }
         while (cond) {
-            if (depID == 0) {
-                System.out.println("--------------------------------");
-                System.out.println("Employees who do not belong to any department");
-                System.out.println("--------------------------------");
-                cond = false;
-                cond2 = false;
+            List<Employee> temp = new ArrayList<>();
+            List<Department> temp1 = new ArrayList<>();
+            boolean cond1 = true;
+            boolean cond2 = true;
+            int depID = 0;
+            System.out.printf("Enter the employee ID for add/delete: ");
+            int ide = InputService.InputInteger();
+            temp = EmployeeDAO.getInstance().selectByConditon("empID", ide, 2);
+            if (temp.size() != 0) {
+                depID = temp.get(0).getDepID();
+                System.out.println(temp.get(0).printfInfor());
+                temp.clear();
             } else {
-                temp1 = DepartmentDAO.getInstance().selectByConditon("depID", depID, 2);
-                System.out.println("--------------------------------");
-                System.out.println("Employee belong to " + temp1.get(0).getDepName());
-                System.out.println("--------------------------------");
-                cond = false;
-                cond2 = true;
-            }
-        }
-        System.out.println("--------------------------------");
-        System.out.println("1: Add a employee to department");
-        System.out.println("2: Delete a employee out department");
-        System.out.println("3: Exit");
-        System.out.println("--------------------------------");
-        System.out.printf("Your Choose: ");
-        int choose = InputService.InputInteger();
-        switch (choose) {
-            case 1: {
-                if (cond2 == false) {
-                    System.out.printf("Enter the department ID for join: ");
-                    int idd = InputService.InputInteger();
-                    temp1 = DepartmentDAO.getInstance().selectByConditon("depID", idd, 2);
-                    int numberMax = temp1.get(0).getNumberMember();
-                    temp1.clear();
-                    int number = EmployeeDAO.getNumberDep("empID", "depID", idd);
-                    if (numberMax >= number) {
-                        EmployeeDAO.getInstance().Update("depID", idd, ide, 2);
-                        break;
-                    } else {
-                        System.out.println("This room is full");
-                        System.out.println("Unable to perform this action");
-                        temp1.clear();
-                        break;
-                    }
-                } else {
-                    System.out.println("Unable to perform this action");
-                    break;
-                }
-            }
-            case 2: {
-                if (cond2 == true) {
-                    EmployeeDAO.getInstance().Update("depID", "", ide, 4);
-                } else {
-                    System.out.println("Unable to perform this action");
-                    break;
-                }
-            }
-            case 3: {
+                System.out.println("Employee not exist");
+                cond1 = false;
                 break;
             }
-            default:{
-                System.out.println("Wrong enter.");
+            while (cond1) {
+                if (depID == 0) {
+                    System.out.println("--------------------------------");
+                    System.out.println("Employees who do not belong to any department");
+                    System.out.println("--------------------------------");
+                    cond1 = false;
+                    cond2 = false;
+                } else {
+                    temp1 = DepartmentDAO.getInstance().selectByConditon("depID", depID, 2);
+                    System.out.println("--------------------------------");
+                    System.out.println("Employee belong to " + temp1.get(0).getDepName());
+                    System.out.println("--------------------------------");
+                    cond1 = false;
+                    cond2 = true;
+                }
+            }
+            System.out.println("--------------------------------");
+            System.out.println("1: Add a employee to department");
+            System.out.println("2: Delete a employee out department");
+            System.out.println("3: Exit");
+            System.out.println("--------------------------------");
+            System.out.printf("Your Choose: ");
+            int choose = InputService.InputInteger();
+            switch (choose) {
+                case 1: {
+                    if (cond2 == false) {
+                        System.out.printf("Enter the department ID for join: ");
+                        int idd = InputService.InputInteger();
+                        temp1 = DepartmentDAO.getInstance().selectByConditon("depID", idd, 2);
+                        int numberMax = temp1.get(0).getNumberMember();
+                        temp1.clear();
+                        int number = EmployeeDAO.getNumberDep("empID", "depID", idd);
+                        if (numberMax >= number) {
+                            EmployeeDAO.getInstance().Update("depID", idd, ide, 2);
+                            break;
+                        } else {
+                            System.out.println("This room is full");
+                            System.out.println("Unable to perform this action");
+                            temp1.clear();
+                            break;
+                        }
+                    } else {
+                        System.out.println("Unable to perform this action");
+                        break;
+                    }
+                }
+                case 2: {
+                    if (cond2 == true) {
+                        EmployeeDAO.getInstance().Update("depID", "", ide, 4);
+                    } else {
+                        System.out.println("Unable to perform this action");
+                        break;
+                    }
+                }
+                case 3: {
+                    cond = false;
+                    break;
+                }
+                default: {
+                    System.out.println("Wrong enter.");
+                }
             }
         }
-
     }
 
     public void MoveDepartment() {
@@ -765,13 +773,13 @@ public class EmployeeService {
                     }
                     break;
                 }
-                case 5:{
-                    Map<Integer,Employee> tempx =
+                case 5: {
+                    Map<Integer, Employee> tempx =
                             temp1.stream().collect(Collectors.groupingBy(Employee::getDepID,
-                            Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary)),
-                                    Optional::get)));
-                    tempx.forEach((depID,Employee) ->
-                            System.out.println("Department: "+ depID + " is: Employee "+Employee.getEmpName()+" - Salary: "+Employee.getSalary()));
+                                    Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary)),
+                                            Optional::get)));
+                    tempx.forEach((depID, Employee) ->
+                            System.out.println("Department: " + depID + " is: Employee " + Employee.getEmpName() + " - Salary: " + Employee.getSalary()));
                 }
                 case 6: {
                     cond = false;
