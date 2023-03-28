@@ -582,10 +582,14 @@ public class EmployeeService {
                     cond2 = false;
                 } else {
                     temp1 = DepartmentDAO.getInstance().selectByConditon("depID", depID, 2);
+                    managerID = temp1.get(0).getDepManagerID();
                     System.out.println("--------------------------------");
                     System.out.println("Employee belong to " + temp1.get(0).getDepName());
+                    if(ide == managerID){
+                        System.out.println("Employee is manager " + temp1.get(0).getDepName());
+                    }
                     System.out.println("--------------------------------");
-                    managerID = temp1.get(0).getDepManagerID();
+
                     temp1.clear();
                     cond = false;
                     cond2 = true;
@@ -605,8 +609,7 @@ public class EmployeeService {
                             int number = EmployeeDAO.getNumberDep("empID", "depID", idd);
                             if (numberMax >= number) {
                                 if (managerID == ide) {
-                                    System.out.println("This employee is manager of " + temp1.get(0).getDepName() + " department");
-                                    DepartmentDAO.getInstance().Update("depManagerID", "", ide, 4);
+                                    DepartmentDAO.getInstance().Update("depManagerID", "", depID, 4);
                                 }
                                 EmployeeDAO.getInstance().Update("depID", idd, ide, 2);
                             } else {
@@ -663,9 +666,12 @@ public class EmployeeService {
                     cond = false;
                 } else {
                     temp1 = DepartmentDAO.getInstance().selectByConditon("depID", depID, 2);
+                    managerId = temp1.get(0).getDepManagerID();
                     System.out.println("--------------------------------");
                     System.out.println("Employee belong to " + temp1.get(0).getDepName());
-                    managerId = temp1.get(0).getDepManagerID();
+                    if(ide == managerId){
+                        System.out.println("Employee is manager " + temp1.get(0).getDepName());
+                    }
                     System.out.println("--------------------------------");
                     cond = false;
                 }
@@ -680,8 +686,8 @@ public class EmployeeService {
                     int idd = InputService.InputInteger();
                     System.out.println("--------------------------------");
                     temp1 = DepartmentDAO.getInstance().selectByConditon("depID", idd, 2);
-                    temp2 = EmployeeDAO.getInstance().selectByConditon("depID", idd, 2);
                     if (temp1.size() != 0) {
+                        temp2 = EmployeeDAO.getInstance().selectByConditon("depID", temp1.get(0).getDepManagerID(), 2);
                         System.out.println(temp1.get(0).printfInfor());
                         System.out.println("--------------------------------");
                         if (temp2.size() != 0) {
@@ -712,7 +718,7 @@ public class EmployeeService {
                                 if (numberMax > number) {
                                     if (managerId == ide) {
                                         System.out.printf("This employee is manager of orther department");
-                                        DepartmentDAO.getInstance().Update("depManagerID", "", ide, 4);
+                                        DepartmentDAO.getInstance().Update("depManagerID", "", depID, 4);
                                     }
                                     System.out.printf("Update employee department ");
                                     EmployeeDAO.getInstance().Update("depID", idd, ide, 2);

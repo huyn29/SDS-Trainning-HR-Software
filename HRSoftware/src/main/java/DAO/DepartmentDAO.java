@@ -118,7 +118,7 @@ public class DepartmentDAO implements InterfaceDAO<Department> {
             int rs = prst.executeUpdate();
             if(rs != 0){
                 System.out.println("Successfully");
-            }else {System.out.println("Error");}
+            }else {System.out.println("Update Error");}
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -144,7 +144,7 @@ public class DepartmentDAO implements InterfaceDAO<Department> {
             int rs = prst.executeUpdate();
             if(rs != 0){
                 System.out.println("Successfully");
-            }else {System.out.println("Error");}
+            }else {System.out.println("Delete Error");}
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

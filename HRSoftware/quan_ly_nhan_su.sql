@@ -1,6 +1,6 @@
 create database if not exists qlns ;
 use qlns;
-
+UPDATE departments SET 
 create table if not exists admins(
 	adminID int PRIMARY KEY AUTO_INCREMENT,
 	userAd varchar(10),
@@ -8,7 +8,7 @@ create table if not exists admins(
 );
 INSERT INTO admins(userAd,passwordAd) VALUES 
 	('admin','adminadmin1'),
-	('huyn29','adminadmin1');
+	('huyn29','adminadmin2');
 
 CREATE TABLE IF NOT EXISTS departments(
 	depID int NOT NULL PRIMARY KEY,
@@ -40,3 +40,5 @@ INSERT INTO employees(empName,empPhone,email, salary) VALUES
 ('Nguyen Anh', '0975654589', 'danh@gmail.com', 12.7 ),
 ('Dao Anh', '0374584389', 'hanh@gmail.com', 13.5 ),
 ('Do Dang', '0974678549', 'dang@gmail.com', 11.9 );
+
+UPDATE departments SET depID = NULL WHERE depID = 4;

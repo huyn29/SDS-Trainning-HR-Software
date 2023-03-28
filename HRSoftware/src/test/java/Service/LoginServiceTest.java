@@ -1,6 +1,7 @@
 package Service;
 
 import Database.JDBCUtil;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,49 +17,74 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class LoginServiceTest {
 
     @BeforeAll
-    public static void init(){
+    public static void init() {
         System.out.println("Before all");
     }
-    @Test
-    public void testLogin (){
-        String user = "admin";
-        String Pass = "admin";
-        LoginService lgs = new LoginService();
-        boolean rs = Login(user,Pass);
 
+    @Test
+    public void testLogin() {
+        String user = "admin";
+        String Pass = "adminadmin1";
+        LoginService lgs = new LoginService();
+        boolean rs = Login(user, Pass);
         Assertions.assertTrue(rs);
     }
+
     @Test
-    public void testUserNull(){
+    public void testUserNull() {
         String user = null;
-        String pass = "admin";
+        String pass = "adminadmin1";
         LoginService lgs = new LoginService();
-        boolean rs = Login(user,pass);
+        boolean rs = Login(user, pass);
         assertFalse(rs);
     }
+
     @Test
-    public void testPassNull(){
+    public void testPassNull() {
         String user = "admin";
         String pass = null;
         LoginService lgs = new LoginService();
-        boolean rs = Login(user,pass);
+        boolean rs = Login(user, pass);
         assertFalse(rs);
     }
+
     @Test
-    public void testUserErrpr(){
-        String user = "x";
-        String pass = "admin";
+    public void testUserError() {
+        String user = "admin";
+        String pass = "x";
         LoginService lgs = new LoginService();
-        boolean rs = lgs.Login(user,pass);
+        boolean rs = lgs.Login(user, pass);
         Assertions.assertFalse(rs);
     }
-@Test
-public void testEmptyDatabase() throws SQLException {
-    Connection cnt = JDBCUtil.getConnection();
-    Statement stmt = cnt.createStatement();
-    String Sql = "DELETE FROM admins";
-    stmt.executeUpdate(Sql);
-    boolean result = Login("admin1", "password1");
-    assertFalse(result);
-}
+
+    @Test
+    public void testPassError() {
+        String user = "x";
+        String pass = "addminadmin1";
+        LoginService lgs = new LoginService();
+        boolean rs = lgs.Login(user, pass);
+        Assertions.assertFalse(rs);
+    }
+
+    @Test
+    public void testPassUserError() {
+        String user = "x";
+        String pass = "x";
+        LoginService lgs = new LoginService();
+        boolean rs = lgs.Login(user, pass);
+        Assertions.assertFalse(rs);
+    }
+    @AfterAll
+    public static void last() {
+        System.out.println("AFTER ALL");
+    }
+//@Test
+//public void testEmptyDatabase() throws SQLException {
+//    Connection cnt = JDBCUtil.getConnection();
+//    Statement stmt = cnt.createStatement();
+//    String Sql = "DELETE FROM admins";
+//    stmt.executeUpdate(Sql);
+//    boolean result = Login("admin1", "password1");
+//    assertFalse(result);
+//}
 }

@@ -19,7 +19,7 @@ public class App {
                 System.out.printf("Enter your user: ");
                 String userType = InputService.InputUser();
                 System.out.println();
-                // Tối thiểu tám ký tự, ít nhất một chữ cái và một số
+                // Tối thiểu năm ký tự, ít nhất một chữ cái và một số
                 System.out.printf("Enter your password: ");
                 String passType = InputService.InputPass();
                 if (LoginService.Login(userType, passType)) {
