@@ -122,6 +122,7 @@ public class EmployeeDAO implements InterfaceDAO<Employee> {
             } else if (cond ==4) {
                 prst.setNull(1,Types.INTEGER);
             }
+            System.out.println(prst.toString());
             int rs = prst.executeUpdate();
             if(rs != 0){
                 System.out.println("Successfully");

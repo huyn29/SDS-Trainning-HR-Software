@@ -44,14 +44,14 @@ public class LoginServiceTest {
         boolean rs = Login(user,pass);
         assertFalse(rs);
     }
-//    @Test
-//    public void testPassNull(){
-//        String user = "admin";
-//        String pass = null;
-//        LoginService lgs = new LoginService();
-//        boolean rs = lgs.Login(user,pass);
-//        Assertions.assertFalse(rs);
-//    }
+    @Test
+    public void testUserErrpr(){
+        String user = "x";
+        String pass = "admin";
+        LoginService lgs = new LoginService();
+        boolean rs = lgs.Login(user,pass);
+        Assertions.assertFalse(rs);
+    }
 @Test
 public void testEmptyDatabase() throws SQLException {
     Connection cnt = JDBCUtil.getConnection();

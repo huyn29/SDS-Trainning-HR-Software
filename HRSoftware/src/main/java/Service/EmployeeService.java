@@ -11,9 +11,11 @@ import java.util.stream.Collectors;
 
 public class EmployeeService {
     List<Employee> empList;
+    List<Department> depList;
 
     public EmployeeService() {
         empList = new ArrayList<>();
+        depList = new ArrayList<>();
     }
 
     public void detail(boolean cond1, boolean cond2) {
@@ -22,19 +24,20 @@ public class EmployeeService {
 
     public void addNewEmp() {
         List<Employee> temp = new ArrayList<>();
-        temp = EmployeeDAO.getInstance().SelectAll();
-        boolean cond1 = false;
-        boolean cond2 = false;
         while (true) {
+            boolean cond1 = false;
+            boolean cond2 = false;
             System.out.println("--------------------------------");
             System.out.println("Enter number employee for add.");
             System.out.println("Enter 0 to Exit.");
             System.out.println("--------------------------------");
+            System.out.printf("Your choose: ");
             int n = InputService.InputInteger();
             if (n == 0) {
                 break;
             }
             for (int i = 0; i < n; i++) {
+                temp = EmployeeDAO.getInstance().SelectAll();
                 System.out.println("--------------------------------");
                 System.out.printf("Enter name: ");
                 String name = InputService.InputString();
@@ -63,6 +66,7 @@ public class EmployeeService {
                 } else {
                     System.out.println("This phone and email already exists. Can not add employee");
                 }
+                temp.clear();
             }
         }
     }
@@ -72,6 +76,9 @@ public class EmployeeService {
         boolean cond = true;
         boolean x = false;
         while (true) {
+            empList = EmployeeDAO.getInstance().SelectAll();
+            empList.forEach(e-> System.out.println(e.printfInfor()));
+            empList.clear();
             System.out.println("--------------------------------");
             System.out.println("Enter employee ID for update");
             System.out.println("Enter 0 to Exit");
@@ -85,6 +92,7 @@ public class EmployeeService {
             empList = EmployeeDAO.getInstance().SelectAll();
             if (temp.size() != 0) {
                 System.out.println(temp.get(0).printfInfor());
+                cond = true;
             } else {
                 System.out.println("Employee not exist");
                 cond = false;
@@ -177,8 +185,13 @@ public class EmployeeService {
             int i1 = InputService.InputInteger();
             switch (i1) {
                 case 1: {
+                    empList = EmployeeDAO.getInstance().SelectAll();
+                    empList.forEach(e-> System.out.println(e.printfInfor()));
+                    empList.clear();
+                    System.out.println("--------------------------------");
                     System.out.printf("Enter the ID: ");
                     int id = InputService.InputInteger();
+                    System.out.println("--------------------------------");
                     temp = EmployeeDAO.getInstance().selectByConditon("empID", id, 2);
                     if (temp.size() != 0) {
                         int depID = temp.get(0).getDepID();
@@ -206,8 +219,13 @@ public class EmployeeService {
                     }
                 }
                 case 2: {
+                    empList = EmployeeDAO.getInstance().SelectAll();
+                    empList.forEach(e-> System.out.println(e.printfInfor()));
+                    empList.clear();
+                    System.out.println("--------------------------------");
                     System.out.printf("Enter the name: ");
                     String name = InputService.InputString();
+                    System.out.println("--------------------------------");
                     temp = EmployeeDAO.getInstance().selectByConditon("empName", name, 1);
                     if (temp.size() != 0) {
                         int count = 0;
@@ -249,8 +267,13 @@ public class EmployeeService {
                 }
 
                 case 3: {
+                    empList = EmployeeDAO.getInstance().SelectAll();
+                    empList.forEach(e-> System.out.println(e.printfInfor()));
+                    empList.clear();
+                    System.out.println("--------------------------------");
                     System.out.printf("Enter the phone: ");
                     String phone = InputService.InputPhone();
+                    System.out.println("--------------------------------");
                     temp = EmployeeDAO.getInstance().selectByConditon("empPhone", phone, 1);
                     if (temp.size() != 0) {
                         int depID = temp.get(0).getDepID();
@@ -278,8 +301,13 @@ public class EmployeeService {
                     }
                 }
                 case 4: {
+                    empList = EmployeeDAO.getInstance().SelectAll();
+                    empList.forEach(e-> System.out.println(e.printfInfor()));
+                    empList.clear();
+                    System.out.println("--------------------------------");
                     System.out.printf("Enter the email: ");
                     String email = InputService.InputEmail();
+                    System.out.println("--------------------------------");
                     temp = EmployeeDAO.getInstance().selectByConditon("email", email, 1);
                     if (temp.size() != 0) {
                         int depID = temp.get(0).getDepID();
@@ -413,6 +441,9 @@ public class EmployeeService {
         boolean cond1 = true;
         boolean cond2 = true;
         while (true) {
+            empList = EmployeeDAO.getInstance().SelectAll();
+            empList.forEach(e-> System.out.println(e.printfInfor()));
+            empList.clear();
             System.out.println("--------------------------------");
             System.out.println("Enter the employee ID for add/delete");
             System.out.println("Enter 0 to Exit");
@@ -452,22 +483,32 @@ public class EmployeeService {
                     switch (choose) {
                         case 1: {
                             if (cond2 == false) {
+                                depList = DepartmentDAO.getInstance().SelectAll();
+                                depList.forEach(e-> System.out.println(e.printfInfor()));
+                                depList.clear();
+                                System.out.println("--------------------------------");
                                 System.out.printf("Enter the department ID for join: ");
                                 int idd = InputService.InputInteger();
+                                System.out.println("--------------------------------");
                                 temp1 = DepartmentDAO.getInstance().selectByConditon("depID", idd, 2);
-                                int numberMax = temp1.get(0).getNumberMember();
-                                temp1.clear();
-                                int number = EmployeeDAO.getNumberDep("empID", "depID", idd);
-                                if (numberMax > number) {
-                                    EmployeeDAO.getInstance().Update("depID", idd, ide, 2);
-                                    cond1 = true;
-                                    break;
-                                } else {
-                                    System.out.println("This room is full");
-                                    System.out.println("Unable to perform this action");
+                                if (temp1.size() != 0) {
+                                    int numberMax = temp1.get(0).getNumberMember();
                                     temp1.clear();
-                                    break;
+                                    int number = EmployeeDAO.getNumberDep("empID", "depID", idd);
+                                    if (numberMax > number) {
+                                        EmployeeDAO.getInstance().Update("depID", idd, ide, 2);
+                                        cond1 = true;
+                                        break;
+                                    } else {
+                                        System.out.println("This room is full");
+                                        System.out.println("Unable to perform this action");
+                                        temp1.clear();
+                                        break;
+                                    }
+                                } else {
+                                    System.out.println("Department not exist");
                                 }
+
                             } else {
                                 System.out.println("Unable to perform this action");
                                 break;
@@ -483,6 +524,8 @@ public class EmployeeService {
                                         DepartmentDAO.getInstance().Update("depManagerID", "", depID, 4);
                                         temp1.clear();
                                     }
+                                } else {
+                                    System.out.println("Department not exist");
                                 }
                                 cond1 = true;
                                 break;
@@ -514,6 +557,9 @@ public class EmployeeService {
         boolean cond2 = true;
 
         while (true) {
+            empList = EmployeeDAO.getInstance().SelectAll();
+            empList.forEach(e-> System.out.println(e.printfInfor()));
+            empList.clear();
             System.out.println("--------------------------------");
             System.out.println("Enter the employee ID for move department");
             System.out.println("Enter 0 to Exit");
@@ -526,6 +572,7 @@ public class EmployeeService {
             temp = EmployeeDAO.getInstance().selectByConditon("empID", ide, 2);
             if (temp.size() != 0) {
                 int depID = temp.get(0).getDepID();
+                int managerID = 0;
                 System.out.println(temp.get(0).printfInfor());
                 if (depID == 0) {
                     System.out.println("--------------------------------");
@@ -533,43 +580,56 @@ public class EmployeeService {
                     System.out.println("--------------------------------");
                     cond = false;
                     cond2 = false;
-                    break;
                 } else {
                     temp1 = DepartmentDAO.getInstance().selectByConditon("depID", depID, 2);
                     System.out.println("--------------------------------");
                     System.out.println("Employee belong to " + temp1.get(0).getDepName());
                     System.out.println("--------------------------------");
+                    managerID = temp1.get(0).getDepManagerID();
+                    temp1.clear();
                     cond = false;
                     cond2 = true;
                 }
                 while (!cond) {
                     if (cond2 == true) {
+                        depList = DepartmentDAO.getInstance().SelectAll();
+                        depList.forEach(e-> System.out.println(e.printfInfor()));
+                        depList.clear();
+                        System.out.println("--------------------------------");
                         System.out.printf("Enter the department ID for move: ");
                         int idd = InputService.InputInteger();
+                        System.out.println("--------------------------------");
                         temp1 = DepartmentDAO.getInstance().selectByConditon("depID", idd, 2);
-                        int managerID = temp.get(0).getManagerID();
-                        int numberMax = temp1.get(0).getNumberMember();
-                        int number = EmployeeDAO.getNumberDep("empID", "depID", idd);
-                        if (numberMax >= number) {
-                            if (managerID != 0) {
-                                DepartmentDAO.getInstance().Update("depManagerID", "", ide, 4);
+                        if (temp1.size() != 0) {
+                            int numberMax = temp1.get(0).getNumberMember();
+                            int number = EmployeeDAO.getNumberDep("empID", "depID", idd);
+                            if (numberMax >= number) {
+                                if (managerID == ide) {
+                                    System.out.println("This employee is manager of " + temp1.get(0).getDepName() + " department");
+                                    DepartmentDAO.getInstance().Update("depManagerID", "", ide, 4);
+                                }
+                                EmployeeDAO.getInstance().Update("depID", idd, ide, 2);
+                            } else {
+                                System.out.println("This room is full");
+                                System.out.println("Unable to perform this action");
+                                temp1.clear();
+                                cond = true;
                             }
-                            EmployeeDAO.getInstance().Update("depID", idd, ide, 2);
+                            break;
                         } else {
-                            System.out.println("This room is full");
-                            System.out.println("Unable to perform this action");
-                            temp1.clear();
-                            cond =true;
+                            System.out.println("Department not exist");
                         }
-                    } else {
-                        System.out.println("Unable to perform this action");
-                        cond =true;
+                    }
+                    if (cond2 == false) {
+                        System.out.println("Employee not exist department. Can not move.");
+                        cond = true;
                     }
                 }
             } else {
                 System.out.println("Employee not exist");
             }
         }
+
     }
 
     public void chooseDepManager() {
@@ -577,92 +637,111 @@ public class EmployeeService {
         List<Department> temp1 = new ArrayList<>();
         List<Employee> temp2 = new ArrayList<>();
         boolean cond = true;
-        boolean cond2 = true;
-        int depID = 0;
-        System.out.printf("Enter the employee ID selected: ");
-        int ide = InputService.InputInteger();
-        temp = EmployeeDAO.getInstance().selectByConditon("empID", ide, 2);
-        if (temp.size() != 0) {
-            depID = temp.get(0).getDepID();
-            System.out.println(temp.get(0).printfInfor());
-        } else {
-            System.out.println("Employee not exist");
-            cond = false;
-        }
-        while (cond) {
-            if (depID == 0) {
-                System.out.println("--------------------------------");
-                System.out.println("Employees who do not belong to any department");
-                System.out.println("--------------------------------");
-                cond = false;
-                break;
-            } else {
-                temp1 = DepartmentDAO.getInstance().selectByConditon("depID", depID, 2);
-                System.out.println("--------------------------------");
-                System.out.println("Employee belong to " + temp1.get(0).getDepName());
-                System.out.println("--------------------------------");
-                cond = false;
-            }
-        }
-        while (!cond) {
-            System.out.printf("Enter the department ID: ");
-            int idd = InputService.InputInteger();
-            temp1 = DepartmentDAO.getInstance().selectByConditon("depID", idd, 2);
-            temp2 = EmployeeDAO.getInstance().selectByConditon("depID", idd, 2);
-            if (temp1.size() != 0) {
-                System.out.println(temp1.get(0).printfInfor());
-                System.out.println("--------------------------------");
-                System.out.println("Manager of this depart is: " + temp2.get(0).getEmpName());
-                System.out.println("--------------------------------");
-            } else {
-                System.out.println("Department not exist");
+        while (true) {
+            int depID = 0;
+            int managerId = 0;
+            empList = EmployeeDAO.getInstance().SelectAll();
+            empList.forEach(e-> System.out.println(e.printfInfor()));
+            empList.clear();
+            System.out.println("--------------------------------");
+            System.out.println("Enter the employee ID selected");
+            System.out.println("Enter 0 to Exit");
+            System.out.println("--------------------------------");
+            System.out.printf("Your choose: ");
+            int ide = InputService.InputInteger();
+            if (ide == 0) {
                 break;
             }
-            int number = EmployeeDAO.getNumberDep("empID", "depID", idd);
-            int numberMax = temp1.get(0).getNumberMember();
-            int managerID = temp1.get(0).getDepManagerID();
-            if (idd == temp.get(0).getEmpID()) {
-                System.out.println("Do you want change department RM - 1:yes/2:No");
-                System.out.printf("Your choose: ");
-                int x = InputService.InputInteger();
-                if (x == 1) {
-                    System.out.printf("Update employee become department manager ");
-                    DepartmentDAO.getInstance().Update("depManagerID", ide, idd, 2);
-                    break;
+            temp = EmployeeDAO.getInstance().selectByConditon("empID", ide, 2);
+            if (temp.size() != 0) {
+                depID = temp.get(0).getDepID();
+                System.out.println(temp.get(0).printfInfor());
+                if (depID == 0) {
+                    System.out.println("--------------------------------");
+                    System.out.println("Employees who do not belong to any department");
+                    System.out.println("--------------------------------");
+                    cond = false;
                 } else {
-                    break;
+                    temp1 = DepartmentDAO.getInstance().selectByConditon("depID", depID, 2);
+                    System.out.println("--------------------------------");
+                    System.out.println("Employee belong to " + temp1.get(0).getDepName());
+                    managerId = temp1.get(0).getDepManagerID();
+                    System.out.println("--------------------------------");
+                    cond = false;
                 }
-            } else {
-                System.out.println("Do you want change department RM - 1:yes/2:No");
-                System.out.printf("Your choose: ");
-                int x = InputService.InputInteger();
-                if (x == 1) {
-                    if (numberMax > number) {
-                        if (temp2.get(0).getDepID() != 0) {
-                            System.out.printf("Update delete employee old department ");
-                            EmployeeDAO.getInstance().Update("depID", "", ide, 4);
+
+                while (!cond) {
+                    boolean cond1 = true;
+                    depList = DepartmentDAO.getInstance().SelectAll();
+                    depList.forEach(e-> System.out.println(e.printfInfor()));
+                    depList.clear();
+                    System.out.println("--------------------------------");
+                    System.out.printf("Enter the department ID: ");
+                    int idd = InputService.InputInteger();
+                    System.out.println("--------------------------------");
+                    temp1 = DepartmentDAO.getInstance().selectByConditon("depID", idd, 2);
+                    temp2 = EmployeeDAO.getInstance().selectByConditon("depID", idd, 2);
+                    if (temp1.size() != 0) {
+                        System.out.println(temp1.get(0).printfInfor());
+                        System.out.println("--------------------------------");
+                        if (temp2.size() != 0) {
+                            System.out.println("Manager of this department is: " + temp2.get(0).getEmpName());
+                        } else {
+                            System.out.println("Department have not manager");
                         }
-                        System.out.printf("Update employee department ");
-                        EmployeeDAO.getInstance().Update("depID", idd, ide, 2);
-                        System.out.printf("Update employee become department manager ");
-                        DepartmentDAO.getInstance().Update("depManagerID", ide, idd, 2);
-                        break;
+                        System.out.println("--------------------------------");
+
+                        int number = EmployeeDAO.getNumberDep("empID", "depID", idd);
+                        int numberMax = temp1.get(0).getNumberMember();
+                        if (idd == depID) {
+                            System.out.println("Do you want change department RM - 1:yes/2:No");
+                            System.out.printf("Your choose: ");
+                            int x = InputService.InputInteger();
+                            if (x == 1) {
+                                System.out.printf("Update employee become department manager ");
+                                DepartmentDAO.getInstance().Update("depManagerID", ide, idd, 2);
+                                break;
+                            } else {
+                                break;
+                            }
+                        } else {
+                            System.out.println("Do you want add department RM - 1:yes/2:No");
+                            System.out.printf("Your choose: ");
+                            int x = InputService.InputInteger();
+                            if (x == 1) {
+                                if (numberMax > number) {
+                                    if (managerId == ide) {
+                                        System.out.printf("This employee is manager of orther department");
+                                        DepartmentDAO.getInstance().Update("depManagerID", "", ide, 4);
+                                    }
+                                    System.out.printf("Update employee department ");
+                                    EmployeeDAO.getInstance().Update("depID", idd, ide, 2);
+                                    System.out.printf("Update employee become department manager ");
+                                    DepartmentDAO.getInstance().Update("depManagerID", ide, idd, 2);
+                                    break;
+                                } else {
+                                    System.out.println("This room is full");
+                                    System.out.println("Do you want change number memeber of this department - 1:yes/2:No");
+                                    int choose = InputService.InputInteger();
+                                    if (choose == 1) {
+                                        System.out.printf("update number member ");
+                                        DepartmentDAO.getInstance().Update("numberMember", (numberMax + 1), idd, 2);
+                                        System.out.println("Try action again!!");
+                                    }
+                                    break;
+                                }
+                            } else {
+                                break;
+                            }
+                        }
                     } else {
-                        System.out.println("This room is full");
-                        System.out.println("Do you want change number memeber of this department - 1:yes/2:No");
-                        int choose = InputService.InputInteger();
-                        if (choose == 1) {
-                            System.out.printf("update number member ");
-                            DepartmentDAO.getInstance().Update("numberMember", (numberMax + 1), idd, 2);
-                            System.out.println("Try action again!!");
-                        }
+                        System.out.println("Department not exist");
                         break;
                     }
-                } else {
-                    break;
                 }
+            } else {
+                System.out.println("Employee not exist");
             }
-
         }
     }
 
@@ -720,11 +799,11 @@ public class EmployeeService {
             List<Employee> temp1 = EmployeeDAO.getInstance().SelectAll();
             List<Department> temp2 = DepartmentDAO.getInstance().SelectAll();
             System.out.println("--------------------------------");
-            System.out.println("1: Show list employee.");
-            System.out.println("2: Show list department.");
-            System.out.println("3: Show list employee a department.");
+            System.out.println("1: Show list all employee.");
+            System.out.println("2: Show list all department.");
+            System.out.println("3: Show list employee any department.");
             System.out.println("4: Employee arrangement");
-            System.out.println("5: Employee have salary highest");
+            System.out.println("5: Employee have salary highest in department");
             System.out.println("6: Exit");
             System.out.println("--------------------------------");
             System.out.printf("Your choose: ");
@@ -815,12 +894,16 @@ public class EmployeeService {
                     break;
                 }
                 case 5: {
-                    Map<Integer, Employee> tempx =
-                            temp1.stream().collect(Collectors.groupingBy(Employee::getDepID,
-                                    Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary)),
-                                            Optional::get)));
-                    tempx.forEach((depID, Employee) ->
-                            System.out.println("Department: " + depID + " is: Employee " + Employee.getEmpName() + " - Salary: " + Employee.getSalary()));
+                    for(Employee x:temp1){
+                        if(x.getDepID() != 0){
+                            Map<Integer, Employee> tempx =
+                                    temp1.stream().collect(Collectors.groupingBy(Employee::getDepID,
+                                            Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary)),
+                                                    Optional::get)));
+                            tempx.forEach((depID, Employee) ->
+                                    System.out.println("Department: " + depID + " is: Employee " + Employee.getEmpName() + " - Salary: " + Employee.getSalary()));
+                        }
+                    }
                 }
                 case 6: {
                     cond = false;

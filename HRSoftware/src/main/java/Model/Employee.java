@@ -90,7 +90,7 @@ public class Employee {
         this.depID = depID;
     }
     public String printfInfor() {
-        return String.format("Employee %-5d\tName: %-10s\tPhone: %-10s\tEmail: %-10s\tSalary: %-10s\tManager ID: %-5d\t Department ID: %-5d"
+        return String.format("Employee %-5d\tName: %-10s\tPhone: %-10s\tEmail: %-20s\tSalary: %-10s\tManager ID: %-5d\t Department ID: %-5d"
                             ,empID,empName,empPhone,email,salary,managerID,depID);
     }
     public double calculateTAX(double salary) {
@@ -101,7 +101,7 @@ public class Employee {
         double Tax = 0;
 
         // Tính số tiền thu nhập chịu thuế
-        double salaryfortax = salary - 4.4;
+        double salaryfortax = salary - 11;
 
         // Tính số tiền thuế phải nộp theo từng mức thuế
         for (int i = 1; i < taxLevel.length; i++) {
@@ -114,7 +114,7 @@ public class Employee {
         }
 
         // Tính số tiền thuế tổng cộng
-        realTax = Tax * 1000;
+        realTax = Tax;
 
         return realTax;
     }

@@ -31,12 +31,44 @@ public class InputService {
         string = scanner.nextLine();
         return string;
     }
+    public static  String InputPass(){
+        String string = "";
+        boolean cond = true;
+        while (cond){
+            string = scanner.nextLine();
+            String pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,}$";
+            Pattern regex = Pattern.compile(pattern);
+            Matcher matcher = regex.matcher(string);
+            if( matcher.matches()==true){
+                cond = false;
+            }else {
+                System.out.println("wrong format. Try again");
+            }
+        }
+        return string;
+    }
     public static  String InputEmail(){
         String string = "";
         boolean cond = true;
         while (cond){
             string = scanner.nextLine();
             String pattern = "^[\\w+\\-.]+@[a-z\\d\\-]+(\\.[a-z\\d\\-]+)*\\.[a-z]+$";
+            Pattern regex = Pattern.compile(pattern);
+            Matcher matcher = regex.matcher(string);
+            if( matcher.matches()==true){
+                cond = false;
+            }else {
+                System.out.println("wrong format. Try again");
+            }
+        }
+        return string;
+    }
+    public static  String InputUser(){
+        String string = "";
+        boolean cond = true;
+        while (cond){
+            string = scanner.nextLine();
+            String pattern = "^.{1,10}$";
             Pattern regex = Pattern.compile(pattern);
             Matcher matcher = regex.matcher(string);
             if( matcher.matches()==true){

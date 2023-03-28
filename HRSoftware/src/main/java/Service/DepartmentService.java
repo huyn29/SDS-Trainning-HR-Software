@@ -19,9 +19,8 @@ public class DepartmentService {
 
     public void addNewDep() {
         List<Department> temp = new ArrayList<>();
-        temp = DepartmentDAO.getInstance().SelectAll();
-        boolean x = false;
         while (true) {
+            boolean x = false;
             System.out.println("--------------------------------");
             System.out.println("Enter number department to add");
             System.out.println("Enter 0 to Exit");
@@ -32,6 +31,7 @@ public class DepartmentService {
                 break;
             }
             for (int i = 0; i < n; i++) {
+                temp = DepartmentDAO.getInstance().SelectAll();
                 System.out.println("--------------------------------");
                 System.out.printf("Enter department ID: ");
                 int depid = InputService.InputInteger();
@@ -51,6 +51,7 @@ public class DepartmentService {
                 } else {
                     System.out.println("This id already exists. Try again");
                 }
+                temp.clear();
             }
         }
     }
@@ -60,6 +61,9 @@ public class DepartmentService {
         List<Department> temp = new ArrayList<>();
         List<Employee> tempe = new ArrayList<>();
         while (true) {
+            depList = DepartmentDAO.getInstance().SelectAll();
+            depList.forEach(e-> System.out.println(e.printfInfor()));
+            depList.clear();
             System.out.println("--------------------------------");
             System.out.println("Enter the department ID for update");
             System.out.println("Enter 0 to Exit");
@@ -72,6 +76,7 @@ public class DepartmentService {
             temp = DepartmentDAO.getInstance().selectByConditon("depID", id, 2);
             if (temp.size() != 0) {
                 System.out.println(temp.get(0).printfInfor());
+                cond = true;
             } else {
                 System.out.println("Department not exist");
                 cond = false;
@@ -127,8 +132,13 @@ public class DepartmentService {
             int i1 = InputService.InputInteger();
             switch (i1) {
                 case 1: {
+                    depList = DepartmentDAO.getInstance().SelectAll();
+                    depList.forEach(e-> System.out.println(e.printfInfor()));
+                    depList.clear();
+                    System.out.println("--------------------------------");
                     System.out.printf("Enter the ID: ");
                     int id = InputService.InputInteger();
+                    System.out.println("--------------------------------");
                     temp = DepartmentDAO.getInstance().selectByConditon("depID", id, 2);
                     tempe = EmployeeDAO.getInstance().selectByConditon("depID", id, 2);
                     if (temp.size() != 0) {
@@ -156,8 +166,13 @@ public class DepartmentService {
                     }
                 }
                 case 2: {
+                    depList = DepartmentDAO.getInstance().SelectAll();
+                    depList.forEach(e-> System.out.println(e.printfInfor()));
+                    depList.clear();
+                    System.out.println("--------------------------------");
                     System.out.printf("Enter the name: ");
                     String name = InputService.InputString();
+                    System.out.println("--------------------------------");
                     temp = DepartmentDAO.getInstance().selectByConditon("depName", name, 1);
                     if (temp.size() != 0) {
                         int id = temp.get(0).getDepID();
