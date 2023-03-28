@@ -11,7 +11,7 @@ INSERT INTO admins(userAd,passwordAd) VALUES
 	('huyn29','1');
 
 create table if not exists departments(
-	depID int NOT NULL PRIMARY KEY UNIQUE,
+	depID int NOT NULL PRIMARY KEY,
 	depName varchar(30) NOT NULL,
 	numberMember int NOT NULL,
 	depManagerID INT

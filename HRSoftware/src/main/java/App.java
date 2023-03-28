@@ -12,13 +12,13 @@ public class App {
         boolean condition = false;
         while (true) {
             System.out.println("Wellcome to HRSoftware");
-            while (!condition) {
-                System.out.printf("Type your user: ");
+            while (condition) {
+                System.out.printf("Enter your user: ");
                 String userType = InputService.InputString();
                 System.out.println();
                 System.out.printf("Enter your password: ");
                 String passType = InputService.InputString();
-                if (LoginService.Login(userType,passType)) {
+                if (LoginService.Login(userType, passType)) {
                     System.out.println("Login successfull");
                     System.out.println();
                     condition = true;
@@ -26,7 +26,7 @@ public class App {
                     System.out.println("Wrong account. Try again.");
                 }
             }
-            while (condition) {
+            while (!condition) {
                 System.out.println();
                 System.out.println("* * * * * * * * * * * * MENU * * * * * * * * * * * *");
                 System.out.println(" 1: Add/Update/Delete for information employees    *");
@@ -68,6 +68,9 @@ public class App {
                             case 4: {
                                 break;
                             }
+                            default: {
+                                System.out.println("Wrong enter. Try again");
+                            }
                         }
                         break;
                     }
@@ -95,6 +98,10 @@ public class App {
                             }
                             case 4: {
                                 break;
+
+                            }
+                            default: {
+                                System.out.println("Wrong enter. Try again");
                             }
                         }
                         break;
@@ -128,7 +135,7 @@ public class App {
                         condition = false;
                         break;
                     }
-                    default:{
+                    default: {
                         System.out.println("Wrong enter. Try again.");
                     }
                 }
